@@ -1,0 +1,39 @@
+services:
+  ms1:
+    image: mauron/ms-jave-micro:5
+    container_name: ms1
+    ports:
+      - "8081:8080"
+    environment:
+      MESSAGE: "hola miercoles"
+      PASSWORD: "1234"
+      URLDB: "jdbc://db:3306"
+    restart: unless-stopped
+    networks:
+      - mired
+
+  ms2:
+    image: mauron/ms-jave-micro:5
+    container_name: ms2
+    ports:
+      - "8082:8080"
+    environment:
+      MESSAGE: "hola otro micro"
+      PASSWORD: "fasdfa"
+      URLDB: "jdbc://db:3306"
+    restart: unless-stopped
+    networks:
+      - mired
+  db:
+    image: mysql
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+      - mired
+
+
+networks:
+  mired:
+    driver: bridge
