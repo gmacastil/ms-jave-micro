@@ -26,4 +26,9 @@ jobs:
       run: mvn package -DskipTests
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ms-producto:$(date +%s)
+      run: docker build . --file Dockerfile --tag ms-jave-micro:$(date +%s)
+ 
+    - name: Push the Docker image
+      run: | 
+        docker tag ms-jave-micro:$(date +%s) mauron/ms-jave-micro:$(date +%s)
+        docker push mauron/ms-jave-micro:$(date +%s)
