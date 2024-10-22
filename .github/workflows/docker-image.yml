@@ -26,9 +26,22 @@ jobs:
       run: mvn package -DskipTests
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ms-jave-micro:$(date +%s)
+      run: docker build . --file Dockerfile --tag ms-jave-micro:${{ github.run_number }}
  
     - name: Push the Docker image
       run: | 
-        docker tag ms-jave-micro:$(date +%s) mauron/ms-jave-micro:$(date +%s)
-        docker push mauron/ms-jave-micro:$(date +%s)
+        docker tag ms-jave-micro:${{ github.run_number }} mauron/ms-jave-micro:${{ github.run_number }}
+        docker push mauron/ms-jave-micro:${{ github.run_number }}
+  
+  deploy:
+
+    runs-on: profe
+    
+    steps:
+
+    - name: replace
+      run: sed -i 's/TAG/${{ github.run_number }}/g' docker-compose.yaml
+
+    - name: run docker-compose
+      run: docker compose up -d
+    
