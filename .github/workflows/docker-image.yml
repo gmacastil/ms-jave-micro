@@ -40,8 +40,12 @@ jobs:
     steps:
 
     - name: replace
-      run: sed -i 's/TAG/${{ github.run_number }}/g' docker-compose.yaml
+      #run: sed -i 's/TAG/${{ github.run_number }}/g' docker-compose.yaml
+      run: |
+         cd k8s
+         sed -i 's/TAG/${{ github.run_number }}/g' deployment.yaml
 
-    - name: run docker-compose
-      run: docker compose up -d
+    - name: run
+      #run: docker compose up -d
+      run: kubectl apply -f .
     

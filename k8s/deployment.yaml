@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-jave-micro-deployment
+  namespace: javeriana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-jave-micro
+  template:
+    metadata:
+      labels:
+        app: ms-jave-micro
+    spec:
+      containers:
+        - name: ms-jave-micro
+          image: mauron/ms-jave-micro:TAG
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: ms-jave-micro-configmap
+            - secretRef:
+                name: ms-jave-micro-secret
+
