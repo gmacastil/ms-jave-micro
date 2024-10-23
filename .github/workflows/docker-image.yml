@@ -37,6 +37,8 @@ jobs:
 
     runs-on: profe
     
+    needs: build
+
     steps:
 
     - name: replace
