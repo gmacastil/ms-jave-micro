@@ -49,5 +49,7 @@ jobs:
 
     - name: run
       #run: docker compose up -d
-      run: kubectl apply -f .
+      run: |
+         cd k8s
+         kubectl apply -f .
     
